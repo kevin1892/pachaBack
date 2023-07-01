@@ -23,6 +23,7 @@ class AutoViewSet(viewsets.ModelViewSet):
 def TipoGetView(request):
     tipo = Tipo.objects.all()
     serializer= TipoSerializer(tipo,many=True)
+    return Response(serializer.data)
 
 @api_view(['POST'])
 def TipoPostView(request):
@@ -50,14 +51,14 @@ def AutoFilterViewByYear(request,year):
     serializer=AutoSerializer(auto,many=True)
     return Response(serializer.data)
 @api_view(['GET'])
-def AutoFilterView(request,filter_value,tipo):
+def AutoFilterView(request,filter_value,value):
     if filter_value == "tipo":
-        auto=Auto.objects.filter(tipo=tipo)
+        auto=Auto.objects.filter(tipo=value)
     elif filter_value == "marca":
-        auto=Auto.objects.filter(marca=tipo)
+        auto=Auto.objects.filter(marca=value)
     elif filter_value =="color":
-        auto=Auto.objects.filter(color=tipo)
+        auto=Auto.objects.filter(color=value)
     elif filter_value =="modelo":
-        auto=Auto.objects.filter(modelo=tipo)
+        auto=Auto.objects.filter(modelo=value)
     serializer=AutoSerializer(auto,many=True)
     return Response(serializer.data)
